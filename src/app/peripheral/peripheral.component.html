@@ -1,0 +1,23 @@
+<ActionBar class="action-bar">
+  <Label
+    class="action-bar-title"
+    text="{{ !peripheral ? 'Connecting...' : peripheral?.name + ' (' + peripheral?.UUID + ')' }}"
+  ></Label>
+</ActionBar>
+
+<ScrollView *ngIf="peripheral">
+  <Label text="Services"></Label>
+  <StackLayout class="list-group">
+    <StackLayout *ngFor="let service of peripheral.services" class="list-group-item">
+      <Label [text]="'Service: ' + service.UUID"></Label>
+      <ng-container *ngFor="let characteristic of service.characteristics">
+        <StackLayout
+          class="list-group-item"
+          (tap)="onTapCharacteristic(service, characteristic)"
+        >
+          <Label [text]="'Characteristic: ' + characteristic.UUID"></Label>
+        </StackLayout>
+      </ng-container>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>

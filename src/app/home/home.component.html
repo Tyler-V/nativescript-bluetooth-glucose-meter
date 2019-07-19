@@ -1,0 +1,42 @@
+<ActionBar class="action-bar">
+  <Label class="action-bar-title" text="Bluetooth"></Label>
+</ActionBar>
+
+<StackLayout class="page">
+  <Button
+    class="btn btn-primary btn-active"
+    id="bluetooth-button"
+    [ngClass]="isBluetoothEnabled ? 'enabled' : 'disabled'"
+    text="{{ isBluetoothEnabled ? 'Bluetooth enabled' : 'Enable bluetooth' }}"
+    (tap)="onTapEnableBluetooth()"
+  ></Button>
+  <Button
+    class="btn btn-primary btn-active"
+    id="cvs-health-button"
+    text="connect to cvs_health"
+    (tap)="onTapConnectDevice('88:6B:0F:7B:41:35')"
+  ></Button>
+  <Button
+    class="btn btn-primary btn-active"
+    id="cvs-health-button"
+    text="connect to contour next one"
+    (tap)="onTapConnectDevice('A4:34:F1:DC:71:7C')"
+  ></Button>
+  <Button
+    class="btn btn-primary btn-active"
+    id="scanning-button"
+    [ngClass]="isScanning ? 'disabled' : 'enabled'"
+    text="{{ isScanning ? 'Stop Scanning' : 'Start Scanning' }}"
+    (tap)="onTapScan()"
+  ></Button>
+  <ng-container *ngIf="peripherals.length">
+    <Label text="Peripherals"></Label>
+    <ListView [items]="peripherals" class="list-group">
+      <ng-template let-peripheral="item" let-i="index" let-odd="odd" let-even="even">
+        <StackLayout orientation="horizontal" class="list-group-item" (tap)="onTapPeripheral(peripheral)">
+          <Label [text]="peripheral.name"></Label>
+        </StackLayout>
+      </ng-template>
+    </ListView>
+  </ng-container>
+</StackLayout>
